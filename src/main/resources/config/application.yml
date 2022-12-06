@@ -41,7 +41,7 @@ info:
 
 logging:
   level:
-    it.pagopa.selfcare: ${MS_LOGIN_LOG_LEVEL:DEBUG}
+    it.pagopa.sociallogin: ${MS_LOGIN_LOG_LEVEL:DEBUG}
   pattern:
     additional-info: ",%X{X-Client-Ip:-}]"
 
