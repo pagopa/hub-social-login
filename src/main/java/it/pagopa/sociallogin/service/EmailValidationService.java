@@ -1,16 +1,12 @@
 package it.pagopa.sociallogin.service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import it.pagopa.sociallogin.exceptions.DomainNotAllowedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import it.pagopa.sociallogin.exceptions.DomainNotAllowedException;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class EmailValidationService {
@@ -18,7 +14,10 @@ public class EmailValidationService {
 	@Value("${email.allowed.domains}")
 	public String[] allowedDomains;
 
-//	public void isAllowed(String emailStr) throws DomainNotAllowedException {
+	@Value("${email.allowed.emails}")
+	public String[] allowedEmails;
+
+	//	public void isAllowed(String emailStr) throws DomainNotAllowedException {
 //		String allowedDomainsString = Arrays.toString(allowedDomains)
 //				.replace("[", "")
 //				.replace("]", "")
@@ -36,12 +35,18 @@ public class EmailValidationService {
 
 	public void isAllowed(String emailStr) throws DomainNotAllowedException {
 		boolean isFound = false;
+		boolean isNotFoundMail = true;
 		List<String> domains = Arrays.asList(allowedDomains);
+		List<String> emails = Arrays.asList(allowedEmails);
 		for (String domain : domains) {
-			if (emailStr.contains(domain))
+			if (emailStr.endsWith(domain))
 				isFound = true;
 		}
-		if (!isFound)
+		for (String email : emails) {
+			if (!emailStr.equals(email))
+				isNotFoundMail = false;
+		}
+		if (!isFound || !isNotFoundMail)
 			throw new DomainNotAllowedException("domain not allowed");
 
 	}

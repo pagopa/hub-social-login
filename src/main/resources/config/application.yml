@@ -11,6 +11,7 @@ spring:
       client:
         registration:
           google:
+            #redirect-uri: http://localhost:3000/login/oauth2/code/google
             clientId: ${google.client.id}
             clientSecret: ${google.client.secret}
             scope:
@@ -18,6 +19,7 @@ spring:
               - profile
               
   application:
+
     name: "@project.parent.artifactId@"
     version: "@project.version@"
   profiles:

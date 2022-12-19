@@ -1,17 +1,17 @@
 package it.pagopa.sociallogin.utils;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.TextCodec;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -31,7 +31,8 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> attributes = googleOauth2AuthenticationToken.getPrincipal().getAttributes();
 		claims.put("email", attributes.get("email"));
 		claims.put("family_name", attributes.get("family_name"));
-		//claims.put("fiscal_number", attributes.get(""));
+
+
 		claims.put("name", attributes.get("given_name"));
 		//claims.put("from_aa", Boolean.FALSE);
 		claims.put("uid", attributes.get("sub"));
@@ -65,4 +66,5 @@ public class JwtTokenUtil implements Serializable {
 		Claims claims = Jwts.parser().setSigningKey(TextCodec.BASE64.decode(secret)).parseClaimsJws(jwt).getBody();
 		return claims;
 	}
+
 }
