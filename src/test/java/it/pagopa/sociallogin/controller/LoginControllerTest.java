@@ -63,7 +63,7 @@ class LoginControllerTest {
 		// when
 		MvcResult result = mvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/token")
 				.contentType(APPLICATION_JSON_VALUE).accept(APPLICATION_JSON_VALUE))
-				.andExpect(status().is2xxSuccessful()).andReturn();
+				.andExpect(status().is3xxRedirection()).andReturn();
 		// then
 		assertNotNull(result);
 	}
